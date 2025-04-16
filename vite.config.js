@@ -1,7 +1,7 @@
-import path from "path"
-import react from "@vitejs/plugin-react"
-import { defineConfig } from "vite"
-import { fileURLToPath } from "url"
+import path from "path";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -13,10 +13,9 @@ export default defineConfig({
     },
   },
   server: {
-    host: "0.0.0.0",                // Required for Render
-    port: process.env.PORT || 5173  // Render uses dynamic port
-        allowedHosts: ["deploy-frontend-5uty.onrender.com"] //  this line
-
+    host: "0.0.0.0",
+    port: process.env.PORT || 5173,
+    allowedHosts: ["deploy-frontend-5uty.onrender.com"] //  Add this line
   },
   preview: {
     host: "0.0.0.0",
