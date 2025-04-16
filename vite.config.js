@@ -15,6 +15,8 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",                // Required for Render
     port: process.env.PORT || 5173  // Render uses dynamic port
+        allowedHosts: ["deploy-frontend-5uty.onrender.com"] //  this line
+
   },
   preview: {
     host: "0.0.0.0",
