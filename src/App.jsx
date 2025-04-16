@@ -4,7 +4,7 @@ import MainLayout from "./Layout/MainLayout";
 import HeroSection from "./pages/client/HeroSection";
 import Login from "./pages/Login";
 import Courses from "./pages/client/Courses";
-import MyLearning from "./pages/client/mylearning";
+import MyLearning from "./pages/client/Mylearning";
 import Profile from "./pages/client/Profile";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
