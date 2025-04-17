@@ -52,7 +52,7 @@ const QuizResult = () => {
   const handleCertificateDownload = () => {
     const encodedName = encodeURIComponent(userName);
     const encodedCourseName = encodeURIComponent(courseName);
-    const url = `http://localhost:1552/api/v1/certificate/generate?name=${encodedName}&courseName=${encodedCourseName}`;
+    const url = `const url = `${import.meta.env.VITE_API_URL}/api/v1/certificate/generate?name=${encodedName}&courseName=${encodedCourseName}`;
     window.open(url, "_blank");
   };
 
