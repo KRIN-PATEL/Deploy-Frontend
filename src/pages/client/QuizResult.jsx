@@ -3,7 +3,6 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useGetQuizByCourseQuery } from "@/features/api/quizApi";
 import { useGetCourseByIdQuery } from "@/features/api/courseApi";
-import { useDownloadCertificateMutation } from "@/features/api/certificateApi";
 import { motion } from "framer-motion";
 import {
   CheckCircle,
@@ -25,7 +24,6 @@ const QuizResult = () => {
   const { data: quizData } = useGetQuizByCourseQuery(courseId);
   const { data: userData } = useLoadUserQuery();
   const { data: courseData } = useGetCourseByIdQuery(courseId);
-  const [downloadCertificate] = useDownloadCertificateMutation();
 
   const userName = userData?.user?.name || "Learner";
   const courseName = courseData?.course?.courseTitle || "Course";
@@ -48,11 +46,33 @@ const QuizResult = () => {
     }
   }, [result, isPassed]);
 
-  const handleCertificateDownload = () => {
+  const handleCertificateDownload = async () => {
     const encodedName = encodeURIComponent(userName);
     const encodedCourseName = encodeURIComponent(courseName);
     const url = `${import.meta.env.VITE_API_URL}/api/v1/certificate/generate?name=${encodedName}&courseName=${encodedCourseName}`;
-    window.open(url, "_blank");
+
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        credentials: "include", 
+      });
+
+      if (!response.ok) {
+        throw new Error("Download failed");
+      }
+
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.setAttribute("download", `certificate-${courseName}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (err) {
+      console.error("Error downloading certificate:", err);
+      alert("Failed to download certificate. Please make sure you are logged in.");
+    }
   };
 
   return (
@@ -76,15 +96,9 @@ const QuizResult = () => {
           transition={{ delay: 0.3 }}
         >
           {isPassed ? (
-            <CheckCircle
-              size={56}
-              className="text-green-600 dark:text-green-400 mb-4"
-            />
+            <CheckCircle size={56} className="text-green-600 dark:text-green-400 mb-4" />
           ) : (
-            <XCircle
-              size={56}
-              className="text-red-600 dark:text-red-400 mb-4"
-            />
+            <XCircle size={56} className="text-red-600 dark:text-red-400 mb-4" />
           )}
 
           <div
@@ -111,17 +125,13 @@ const QuizResult = () => {
             className="mb-6"
           >
             <div className="mb-2 text-lg font-semibold text-gray-800 dark:text-gray-200">
-              <span className="text-gray-600 dark:text-gray-300">
-                Your Score:
-              </span>{" "}
+              <span className="text-gray-600 dark:text-gray-300">Your Score:</span>{" "}
               <span className="text-4xl font-bold text-blue-700 dark:text-blue-400">
                 {result.score}
               </span>
             </div>
             <div className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-              <span className="text-gray-600 dark:text-gray-300">
-                Correct Answers:
-              </span>{" "}
+              <span className="text-gray-600 dark:text-gray-300">Correct Answers:</span>{" "}
               <span className="text-2xl text-blue-500 dark:text-blue-300">
                 {result.correctAnswers}
               </span>
@@ -131,9 +141,7 @@ const QuizResult = () => {
               {isPassed ? (
                 <>
                   <BadgeCheck size={20} className="text-green-500" />
-                  <span className="text-green-600 dark:text-green-400">
-                    You passed the quiz!
-                  </span>
+                  <span className="text-green-600 dark:text-green-400">You passed the quiz!</span>
                 </>
               ) : (
                 <>
