@@ -30,12 +30,11 @@ const QuizResult = () => {
   const userName = userData?.user?.name || "Learner";
   const courseName = courseData?.course?.courseTitle || "Course";
 
-  // Calculate pass status
   const totalQuestions = quizData?.quiz?.questions?.length || 0;
   const isPassed =
     result &&
     totalQuestions > 0 &&
-    result.score >= Math.ceil(0.6 * totalQuestions); // 60% passing rule
+    result.score >= Math.ceil(0.6 * totalQuestions); // 60% pass rule
 
   useEffect(() => {
     if (!location.state) {
@@ -52,7 +51,7 @@ const QuizResult = () => {
   const handleCertificateDownload = () => {
     const encodedName = encodeURIComponent(userName);
     const encodedCourseName = encodeURIComponent(courseName);
-    const url = `const url = `${import.meta.env.VITE_API_URL}/api/v1/certificate/generate?name=${encodedName}&courseName=${encodedCourseName}`;
+    const url = `${import.meta.env.VITE_API_URL}/api/v1/certificate/generate?name=${encodedName}&courseName=${encodedCourseName}`;
     window.open(url, "_blank");
   };
 
