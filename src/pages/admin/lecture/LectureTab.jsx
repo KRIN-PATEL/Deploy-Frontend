@@ -27,7 +27,8 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 
-const MEDIA_API = "http://localhost:1552/api/v1/media";
+// const MEDIA_API = "http://localhost:1552/api/v1/media";
+const MEDIA_API = `${import.meta.env.VITE_API_URL}/api/v1/media`;
 
 const LectureTab = () => {
   const [lectureTitle, setLectureTitle] = useState("");
