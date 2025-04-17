@@ -86,11 +86,13 @@ const Sidebar = () => {
       {/* Sidebar for large screens */}
       <aside className="hidden lg:flex flex-col w-[250px] sm:w-[300px] bg-white dark:bg-gray-900 border-r border-gray-300 dark:border-gray-700 p-5 sticky top-0 h-screen shadow-lg">
         <div className="flex flex-col items-center justify-center mt-8 mb-8">
-          <img
-            src={logo}
-            alt="StudyVerse Logo"
-            className="w-48 h-auto object-contain"
-          />
+          <Link to="/">
+            <img
+              src={logo}
+              alt="StudyVerse Logo"
+              className="w-48 h-auto object-contain"
+            />
+          </Link>
         </div>
         {navItems}
       </aside>
@@ -106,11 +108,13 @@ const Sidebar = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-center mb-6">
-              <img
-                src={logo}
-                alt="StudyVerse Logo"
-                className="w-40 h-auto object-contain"
-              />
+              <Link to="/">
+                <img
+                  src={logo}
+                  alt="StudyVerse Logo"
+                  className="w-40 h-auto object-contain"
+                />
+              </Link>
             </div>
             {navItems}
           </aside>
